@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <title>Marthi English Application</title>
+        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <style>
+          .btn{
+            margin: 5px;
+          }
+          body{
+            background: url('./images/bg2.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+          #practice,#add_question {
+            color: white;
+            font-weight: bold;
+            font-size: large;
+          }
+          .black-transparent{
+            background: rgba(0, 0, 0, 0.4);
+            padding: 5px;
+          }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid center">
+            <div class="content h-100 w-100 d-flex align-items-center justify-content-center">
+              <div id="home">
+                <button id="start" class="btn btn-danger m-10">Start practice</button>
+                <button id="add" class="btn btn-danger m-10">Add sentence</button>
+              </div>
+              
+
+              <div id="add_question" class="w-50">
+                <!-- <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <button class="btn btn-danger" type="button">Add sentence</button>
+                  <button class="btn btn-danger cancel" type="button">Cancel</button>
+                </div> -->
+                <div class="form-group black-transparent">
+                  <label for="usr">Marathi sentence:</label></br>
+                  <input type="text" class="form-control" id="marathi_text">
+                </div>
+                <div class="form-group black-transparent">
+                  <label for="pwd">English sentence:</label>
+                  <input type="text" class="form-control" id="eng_text">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-danger" type="button" id="addButton">Add</button>
+                  <button class="btn btn-danger cancel" type="button">Cancel</button>
+                </div>
+              </div>
+
+              
+
+              <div id="practice" class="w-50">
+                <div class="form-group black-transparent">
+                  <label for="usr">sentence:</label></br>
+                  <span id="sentence">कपडे भिजवा</span>
+                </div>
+                <div class="form-group black-transparent">
+                  <label for="usr">Right Answer:</label></br>
+                  <span id="right_sentence">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Answer:</label>
+                  <input type="text" class="form-control" id="pwd">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-danger" type="button" id="next">Next</button>
+                  <button class="btn btn-danger" type="button" id="show_ans">show answer</button>
+                  <button class="btn btn-danger cancel" type="button">Cancel</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <script src="./js/bootstrap.js"></script>
+        <script src="./js/jquery-3.6.3.min.js"></script>
+        <script>
+          $(document).ready(function(){
+
+          let right_ans = null;
+          // jQuery methods go here...
+          $("#practice").hide();
+          $("#add_question").hide();
+
+          $("#start").click(function(){
+            getSentence((result) => {
+              $("#home").hide();
+              $("#practice").show();
+              $("#sentence").empty().text(result.marathi_sentence);
+              right_ans = result.english_sentence;
+            })
+          })
+
+          $("#next").click(function(){
+            getSentence((result) => {
+              // $("#home").hide();
+              // $("#practice").show();
+              $("#right_sentence").empty().text('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+              $("#sentence").empty().text(result.marathi_sentence);
+              right_ans = result.english_sentence;
+              // console.log(result);
+            })
+          })
+
+          $("#show_ans").click(function(){
+            $("#right_sentence").empty().text(right_ans);
+          });
+
+          $("#add").click(function(){
+            $("#home").hide();
+            $("#add_question").show();
+          })
+
+          $(".cancel").click(function(){
+            $("#practice").hide();
+            $("#add_question").hide();
+            $("#home").show();
+          })
+
+          $("#addButton").click(() => {
+            const marathi_text = $("#marathi_text").val();
+            const eng_text = $("#eng_text").val();
+
+            if(marathi_text.trim().length == 0 || eng_text.trim().length == 0){
+              alert("all fields is mandotory");
+            }
+
+            console.log(marathi_text);
+            console.log(eng_text);
+
+            $.ajax({
+                url : "/sentence",
+                type: "POST",
+                data : {
+                  marathi_text,
+                  eng_text
+                },
+                success: function(data, textStatus, jqXHR)
+                {
+                    alert(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                  console.log(errorThrown)
+                }
+            });
+
+          })
+
+          function getSentence(callback){
+            $.ajax({url: "/sentence", success: function(result){
+              callback(result)
+            }});
+          }
+
+          });
+        </script>
+    </body>
+</html>

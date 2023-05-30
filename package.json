@@ -1,0 +1,19 @@
+{
+  "name": "marathi_english",
+  "version": "1.0.0",
+  "description": "Marathi English Practice Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Rohit Ghadigaonkar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.1.2",
+    "nodemon": "^2.0.20"
+  }
+}
