@@ -12,7 +12,7 @@ app.use('/', express.static(path.join(__dirname, 'UI')))
 
 app.get('/sentence', (req, res) => {
     con.query(
-        'SELECT * FROM sys.marathisentences ORDER BY RAND() LIMIT 1',
+        'SELECT * FROM marathisentences ORDER BY RAND() LIMIT 1',
         function(err, results, fields) {
         //   console.log(results); // results contains rows returned by server
         //   console.log(fields); // fields contains extra meta data about results, if available
