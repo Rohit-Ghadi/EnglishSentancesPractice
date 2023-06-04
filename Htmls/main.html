@@ -1,13 +1,13 @@
 <html>
     <head>
         <title>Marthi English Application</title>
-        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="./statics/css/bootstrap.min.css" rel="stylesheet">
         <style>
           .btn{
             margin: 5px;
           }
           body{
-            background: url('./images/bg2.jpg');
+            background: url('./statics/images/bg2.jpg');
             background-repeat: no-repeat;
             background-size: cover;
           }
@@ -28,6 +28,7 @@
               <div id="home">
                 <button id="start" class="btn btn-danger m-10">Start practice</button>
                 <button id="add" class="btn btn-danger m-10">Add sentence</button>
+                <button id="logout" class="btn btn-danger m-10">Logout</button>
               </div>
               
 
@@ -74,8 +75,8 @@
               </div>
             </div>
         </div>
-        <script src="./js/bootstrap.js"></script>
-        <script src="./js/jquery-3.6.3.min.js"></script>
+        <script src="./statics/js/bootstrap.js"></script>
+        <script src="./statics/js/jquery-3.6.3.min.js"></script>
         <script>
           $(document).ready(function(){
 
@@ -154,6 +155,14 @@
               callback(result)
             }});
           }
+
+          $("#logout").click(function(){
+              $.ajax({url: "/logout", success: function(result){
+                location.reload();
+                alert(result);
+              }});
+
+            });
 
           });
         </script>

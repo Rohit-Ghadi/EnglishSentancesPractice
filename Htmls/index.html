@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>Marthi English Application</title>
+        <link href="./statics/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+          .btn{
+            margin: 5px;
+          }
+          body{
+            background: url('./statics/images/bg2.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+          label {
+            color: white;
+            font-weight: bold;
+            font-size: large;
+          }
+          .black-transparent{
+            background: rgba(0, 0, 0, 0.4);
+            padding: 5px;
+          }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid center">
+            <div class="content h-100 w-100 d-flex align-items-center justify-content-center">
+                <div id="login" class="w-50">
+                <!-- <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <button class="btn btn-danger" type="button">Add sentence</button>
+                  <button class="btn btn-danger cancel" type="button">Cancel</button>
+                </div> -->
+                <div class="form-group black-transparent">
+                  <label for="usr">Your Name:</label></br>
+                  <input type="text" class="form-control" id="username">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-danger" type="button" id="submit">Submit</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <script src="./statics/js/bootstrap.js"></script>
+        <script src="./statics/js/jquery-3.6.3.min.js"></script>
+        <script>
+          $(document).ready(function(){
+
+            $("#submit").click(function(){
+              let username = $("#username").val();
+              // console.log(username);
+              $.ajax({url: "/login?username=" + username, success: function(result){
+                alert(result);
+                location.reload();
+              }});
+
+            });
+
+          });
+        </script>
+    </body>
+</html>
